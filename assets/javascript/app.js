@@ -65,7 +65,7 @@ $("#add-gif").on("click", function(event) {
 renderButtons();
 
 
-// -----------------Gifs-----------------//
+// -----------------Gif Creation-----------------//
 
 
 $(".gifs").on("click", function(){
@@ -74,12 +74,44 @@ $(".gifs").on("click", function(){
     var cartoon = $(this).attr("cartoon-data");
 
     // add variable of url being used to connect to giphy API
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + cartoon + "" + "&api_key=WQglZzaDseLC1rFedrnkIA9dsPLoLx0W&limit=10"
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + cartoon + "&rating=pg" + "&api_key=WQglZzaDseLC1rFedrnkIA9dsPLoLx0W&limit=10"
     
     // ajax call to retrieve items from the giphy API
     $.ajax({
         url: queryURL,
         type:"GET",
-        
+
+    // add .then to wait for ajax to gather data
+    }).then(function (response) {
+
+        // add variable to store data from ajax pull
+        var results = response.data;
+
+        // loop through results pulled from giphy
+        for(var i = 0; i < results.length; i++) {
+            
+            // add variable to create div
+            var cartoonDiv = $("<div>");
+
+            // add variable to create p tag with rating information 
+            var p = $("<p>").text("Rating: "+ results[i].rating);
+            console.log(results[0].rating);
+
+            // add variable to create img
+            var cartoonImage = $("<img>");
+
+            // add attribute to image for source with url at index i
+            cartoonImage.attr("src", results[i].url);
+            console.log(results[0].url);
+
+            // attach the paragraph with rating infor to the empty div
+            cartoonDiv.append(p);
+
+            // attach the gif to the Div with the paragraph tag
+            cartoonDiv.append(cartoonImage);
+
+            // attach the div with the paragraph and gif to html
+            $("#gif-images").prepend(cartoonDiv);
+        }
     })
 })
