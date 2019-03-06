@@ -16,7 +16,11 @@
 
 
 // Initial Cartoons
-var gifs = ["Rick and Morty", "Dexter", "Spongebob", "Adventure Time", "Regular Show"];
+var gifs = ["Rick and Morty", "Dexter's Laboratory", "Johnny Bravo", "Adventure Time", "Regular Show"];
+
+
+
+// -----------------Buttons-----------------//
 
 // function for displaying gifs
 function renderButtons(){
@@ -59,3 +63,23 @@ $("#add-gif").on("click", function(event) {
 
 // call renderButtons function too add the initial list
 renderButtons();
+
+
+// -----------------Gifs-----------------//
+
+
+$(".gifs").on("click", function(){
+
+    // add variable to add attribute to button being clicked
+    var cartoon = $(this).attr("cartoon-data");
+
+    // add variable of url being used to connect to giphy API
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + cartoon + "" + "&api_key=WQglZzaDseLC1rFedrnkIA9dsPLoLx0W&limit=10"
+    
+    // ajax call to retrieve items from the giphy API
+    $.ajax({
+        url: queryURL,
+        type:"GET",
+        
+    })
+})
