@@ -68,14 +68,16 @@ renderButtons();
 // -----------------Gif Creation-----------------//
 
 
-$(".gifs").on("click", function(){
+$(document).on("click",".gifs", function(){
+
+    $("#gif-images").empty();
 
     // add variable to add attribute to button being clicked
-    var cartoon = $(this).attr("cartoon-data");
+    var cartoon = $(this).attr("data-name");
 
     // add variable of url being used to connect to giphy API
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + cartoon + "&rating=pg" + "&api_key=WQglZzaDseLC1rFedrnkIA9dsPLoLx0W&limit=10"
-    
+    console.log(queryURL);
     // ajax call to retrieve items from the giphy API
     $.ajax({
         url: queryURL,
@@ -89,20 +91,29 @@ $(".gifs").on("click", function(){
 
         // loop through results pulled from giphy
         for(var i = 0; i < results.length; i++) {
-            
+            console.log(results[i]);
+            console.log(results[i].images.original_still.url);
             // add variable to create div
             var cartoonDiv = $("<div>");
 
             // add variable to create p tag with rating information 
             var p = $("<p>").text("Rating: "+ results[i].rating);
-            console.log(results[0].rating);
 
-            // add variable to create img
-            var cartoonImage = $("<img>");
+            // add variable to create img with class
+            var cartoonImage = $("<img>").addClass("gif-state");
 
             // add attribute to image for source with url at index i
-            cartoonImage.attr("src", results[i].url);
-            console.log(results[0].url);
+            cartoonImage.attr("src", results[i].images.fixed_height_still.url);
+            
+            // add attribute to image for animated url
+            cartoonImage.attr("data-animate", results[i].images.fixed_height.url);
+
+            // add attribute to image for the data state to assist in switching between animated and still
+            cartoonImage.attr("data-state", "still");
+            
+            // add attribute to image for image url
+            cartoonImage.attr("data-still", results[i].images.fixed_height_still.url);
+
 
             // attach the paragraph with rating infor to the empty div
             cartoonDiv.append(p);
@@ -114,4 +125,22 @@ $(".gifs").on("click", function(){
             $("#gif-images").prepend(cartoonDiv);
         }
     })
+})
+
+// -----------------GIF Manipulation-----------------//
+
+$(document).on("click", ".gif-state",function () {
+
+    var state = $(this).attr("data-state");
+
+    if(state === "still"){
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    }
+
+    else if(state === "animate"){
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+
 })
