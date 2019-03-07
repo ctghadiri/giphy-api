@@ -16,7 +16,7 @@
 
 
 // Initial Cartoons
-var gifs = ["Rick and Morty", "Dexter's Laboratory", "Johnny Bravo", "Adventure Time", "Regular Show"];
+var topics = ["Rick and Morty", "Dexter's Laboratory", "Johnny Bravo", "Adventure Time", "Regular Show"];
 
 
 
@@ -28,17 +28,17 @@ function renderButtons(){
     // clear out the old buttons to add the new array
     $("#gif-buttons").empty()
 
-    // loop through the gif array
-    for(var i = 0; i < gifs.length; i++){
+    // loop through the topics array
+    for(var i = 0; i < topics.length; i++){
 
         // create var to hold code for new button we'll create
         var newButton = $("<button>");
 
-        // add class and data attribute with value of gifs at index i to buttons
-        newButton.addClass("gifs").attr("data-name", gifs[i]);
+        // add class and data attribute with value of topics at index i to buttons
+        newButton.addClass("gifs").attr("data-name", topics[i]);
 
         // add text to the buttons with the designated value of i
-        newButton.text(gifs[i]);
+        newButton.text(topics[i]);
 
         // add button to html
         $("#gif-buttons").append(newButton);
@@ -54,8 +54,8 @@ $("#add-gif").on("click", function(event) {
     // add variable to grab the text
     var gif = $("#gif-input").val().trim();
 
-    // add new input information into gifs array
-    gifs.push(gif);
+    // add new input information into topics array
+    topics.push(gif);
 
     // call renderButtons function to add the new list
     renderButtons();
@@ -76,7 +76,7 @@ $(document).on("click",".gifs", function(){
     var cartoon = $(this).attr("data-name");
 
     // add variable of url being used to connect to giphy API
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + cartoon + "&rating=pg" + "&api_key=WQglZzaDseLC1rFedrnkIA9dsPLoLx0W&limit=10"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + cartoon + "&rating=pg" + "&api_key=WQglZzaDseLC1rFedrnkIA9dsPLoLx0W&limit=10"
     console.log(queryURL);
     // ajax call to retrieve items from the giphy API
     $.ajax({
