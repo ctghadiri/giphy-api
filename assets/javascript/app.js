@@ -131,15 +131,21 @@ $(document).on("click",".gifs", function(){
 
 $(document).on("click", ".gif-state",function () {
 
-    // add variable 
+    // add variable to get value of data-state
     var state = $(this).attr("data-state");
 
+    // create if statement for when img is still
     if(state === "still"){
+
+        // change the attribute to data animate and change src to gif
         $(this).attr("src", $(this).attr("data-animate"));
         $(this).attr("data-state", "animate");
     }
 
+    // create if statement for when img is animate
     else if(state === "animate"){
+
+        // change the attribute to data still and change src to an image
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
       }
