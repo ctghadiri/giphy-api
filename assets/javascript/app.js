@@ -131,6 +131,7 @@ $(document).on("click",".gifs", function(){
 
 $(document).on("click", ".gif-state",function () {
 
+    // add variable 
     var state = $(this).attr("data-state");
 
     if(state === "still"){

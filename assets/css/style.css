@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+body {
+    background-image: url(../images/cartoon.jpg);
+    background-size: cover;
+}
+
 button {
     padding:20px;
     margin: 10px;
